@@ -9,7 +9,7 @@ const backup   = path.join(__dirname, '..', 'data', 'accounts.json.bak');
 
 const SAMPLE = {
   name: 'Test User', email: 'test@example.com',
-  password: 'Secret123!', address: '123 Test St, HCMC',
+  password: 'User123', address: '123 Test St, HCMC',
 };
 
 beforeAll(() => {

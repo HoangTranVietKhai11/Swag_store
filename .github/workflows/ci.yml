@@ -122,7 +122,7 @@ jobs:
 
     environment:
       name: production
-      url: https://swagstore.example.com   # ← thay bằng URL thật
+      url: https://swag-store-46ub.onrender.com/   # ← thay bằng URL thật
 
     steps:
       - uses: actions/checkout@v4
@@ -152,9 +152,9 @@ jobs:
       #   run: npx @railway/cli up --service swagstore
 
       # Render (via deploy hook)
-      # - name: Trigger Render deploy
-      #   run: |
-      #     curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
+      - name: Trigger Render deploy
+        run: |
+          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
 
       # Fly.io
       # - name: Deploy to Fly.io

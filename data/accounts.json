@@ -1,1 +1,21 @@
-[]
+[
+  {
+    "id": 1780470959499,
+    "name": "Test Staff",
+    "email": "teststaff@example.com",
+    "address": "123 Staff St",
+    "passwordHash": "$2a$10$5DJMmAVM67a5kQ5Gy276dOlssskvkz6GMbCoNtQN7uMZsbP8wpJkK",
+    "role": "staff",
+    "createdAt": "2026-06-03T07:15:59.604Z",
+    "updatedAt": "2026-06-03T07:15:59.606Z"
+  },
+  {
+    "id": 1780470959607,
+    "name": "Test Customer",
+    "email": "testcustomer@example.com",
+    "address": "456 Customer Ave",
+    "passwordHash": "$2a$10$B5HEWWsPMyx28S/FO7Kx0OTLP4Io0X8fKGdPz94Kcl696rK.oDWSm",
+    "role": "customer",
+    "createdAt": "2026-06-03T07:15:59.699Z"
+  }
+]

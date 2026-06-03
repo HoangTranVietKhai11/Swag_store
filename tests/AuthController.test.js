@@ -171,3 +171,59 @@ describe('register', () => {
     expect(res.render.mock.calls[0][1].error).toMatch(/registered/i);
   });
 });
+
+describe('requireStaff', () => {
+  test('calls next when user has staff role', () => {
+    const req = { session: { user: { id: 1, role: 'staff' } } };
+    const res = { status: jest.fn().mockReturnValue({ json: jest.fn() }) };
+    const next = jest.fn();
+    authCtrl.requireStaff(req, res, next);
+    expect(next).toHaveBeenCalled();
+  });
+
+  test('returns 403 when user is not staff', () => {
+    const req = { session: { user: { id: 1, role: 'customer' } } };
+    const res = { status: jest.fn().mockReturnValue({ json: jest.fn() }) };
+    const next = jest.fn();
+    authCtrl.requireStaff(req, res, next);
+    expect(res.status).toHaveBeenCalledWith(403);
+  });
+
+  test('returns 403 when user is not logged in', () => {
+    const req = { session: {} };
+    const res = { status: jest.fn().mockReturnValue({ json: jest.fn() }) };
+    const next = jest.fn();
+    authCtrl.requireStaff(req, res, next);
+    expect(res.status).toHaveBeenCalledWith(403);
+    expect(next).not.toHaveBeenCalled();
+  });
+});
+
+describe('requireRole', () => {
+  test('returns middleware that calls next for correct role', () => {
+    const middleware = authCtrl.requireRole('admin');
+    const req = { session: { user: { id: 1, role: 'admin' } } };
+    const res = { status: jest.fn().mockReturnValue({ json: jest.fn() }) };
+    const next = jest.fn();
+    middleware(req, res, next);
+    expect(next).toHaveBeenCalled();
+  });
+
+  test('returns 403 for incorrect role', () => {
+    const middleware = authCtrl.requireRole('admin');
+    const req = { session: { user: { id: 1, role: 'customer' } } };
+    const res = { status: jest.fn().mockReturnValue({ json: jest.fn() }) };
+    const next = jest.fn();
+    middleware(req, res, next);
+    expect(res.status).toHaveBeenCalledWith(403);
+  });
+
+  test('works for staff role', () => {
+    const middleware = authCtrl.requireRole('staff');
+    const req = { session: { user: { id: 1, role: 'staff' } } };
+    const res = { status: jest.fn().mockReturnValue({ json: jest.fn() }) };
+    const next = jest.fn();
+    middleware(req, res, next);
+    expect(next).toHaveBeenCalled();
+  });
+});

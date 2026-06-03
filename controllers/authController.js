@@ -12,6 +12,18 @@ exports.requireLogin = (req, res, next) => {
   res.redirect('/login?error=1');
 };
 
+exports.requireStaff = (req, res, next) => {
+  if (req.session.user && req.session.user.role === 'staff') return next();
+  res.status(403).json({ error: 'Staff access required.' });
+};
+
+exports.requireRole = (role) => {
+  return (req, res, next) => {
+    if (req.session.user && req.session.user.role === role) return next();
+    res.status(403).json({ error: `${role} access required.` });
+  };
+};
+
 exports.showLogin = (req, res) => {
   const cart = getCart(req);
   res.render('login', {
