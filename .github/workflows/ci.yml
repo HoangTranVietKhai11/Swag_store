@@ -152,7 +152,9 @@ jobs:
       #   run: npx @railway/cli up --service swagstore
 
       # Render (via deploy hook)
+      # Run only when Render deploy hook URL is configured in secrets.
       - name: Trigger Render deploy
+        if: ${{ secrets.RENDER_DEPLOY_HOOK_URL != '' }}
         run: |
           curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
 
