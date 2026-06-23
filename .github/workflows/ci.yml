@@ -154,9 +154,14 @@ jobs:
       # Render (via deploy hook)
       # Run only when Render deploy hook URL is configured in secrets.
       - name: Trigger Render deploy
-        if: ${{ secrets.RENDER_DEPLOY_HOOK_URL != '' }}
+        env:
+          RENDER_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
-          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
+          if [ -n "$RENDER_HOOK" ]; then
+            curl -X POST "$RENDER_HOOK"
+          else
+            echo "No render deploy hook configured"
+          fi
 
       # Fly.io
       # - name: Deploy to Fly.io
